@@ -1,0 +1,3 @@
+[submodule "ds_video_script"]
+	path = ds_video_script
+	url = git@github.com:DongzhenHuangfu/AI_APP_Demo.git
