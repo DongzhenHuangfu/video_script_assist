@@ -47,6 +47,3 @@ def generate_script(subject, video_length, creativity, api_key):
     print(script)
 
     return title, script
-
-API_KEYS = "sk-bfe6c681263a4068bcf1c62fb669ec7f"
-print(generate_script("sora模型", 1, 0.7, API_KEYS))
