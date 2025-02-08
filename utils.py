@@ -1,7 +1,7 @@
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
-def generate_script(subject, video_length, creativity, api_key):
+def generate_script(subject, video_length, creativity, deep_think, api_key):
     title_template = ChatPromptTemplate.from_messages(
         [
             ("human", "为'{subject}'这个主题的视频想一个吸引人的标题，只回复唯一一个你觉得最实用的标题")
@@ -18,8 +18,11 @@ def generate_script(subject, video_length, creativity, api_key):
         ]
     )
 
+    model_name = "deepseek-reasoner" if deep_think else "deepseek-chat"
+    print("Using model: ", model_name)
+
     model = ChatOpenAI(
-        model="deepseek-chat",
+        model=model_name,
         api_key=api_key,
         temperature=creativity,
         base_url="https://api.deepseek.com"
