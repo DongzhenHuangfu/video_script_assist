@@ -1,4 +1,5 @@
 import streamlit as st
+import traceback
 from utils import generate_script
 
 st.title("🎬 视频脚本生成器")
@@ -15,7 +16,7 @@ creativity = st.slider("✨ 请输入视频脚本的创造力（数字小说明�
 submit = st.button("生成脚本")
 
 if submit and not api_key:
-    st.info("请输入你的OpenAI API密钥")
+    st.info("请输入你的Deepseek API密钥")
     st.stop()
 if submit and not subject:
     st.info("请输入视频的主题")
@@ -24,15 +25,20 @@ if submit and not video_length >= 0.1:
     st.info("视频长度需要大于或等于0.1")
     st.stop()
 if submit:
-    with st.spinner("AI正在思考中，请稍等..."):
-        deep_think = False
-        if agree:
-            deep_think = True
-        title, script = generate_script(subject, video_length, creativity, deep_think, api_key)
-    st.success("视频脚本已生成！")
-    st.subheader("🔥 标题：")
-    st.write(title)
-    st.subheader("📝 视频脚本：")
-    st.write(script)
-    with st.expander("搜索结果 👀"):
-        st.info("暂不支持")
+    try:
+        with st.spinner("AI正在思考中，请稍等..."):
+            deep_think = False
+            if agree:
+                deep_think = True
+            title, script = generate_script(subject, video_length, creativity, deep_think, api_key)
+        st.success("视频脚本已生成！")
+        st.subheader("🔥 标题：")
+        st.write(title)
+        st.subheader("📝 视频脚本：")
+        st.write(script)
+        with st.expander("搜索结果 👀"):
+            st.info("暂不支持")
+    except Exception as e:
+        traceback.print_exc()
+        st.error("Deepseek又宕机了，请稍后再试~")
+        st.stop()
